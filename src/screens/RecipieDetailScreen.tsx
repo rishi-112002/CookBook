@@ -17,7 +17,7 @@ function RecipieDetailScreen() {
     const [loading, setLoading] = useState(true)
     const getMeal = async (id: React.SetStateAction<string>) => {
         try {
-            const response = axios.get(`https://themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+            const response = axios.get(`https://themealdb.com/agitpi/json/v1/1/lookup.php?i=${id}`)
 
             console.log("dataformeal", (await response).data);
 
