@@ -20,10 +20,7 @@ function Recipies(props: { recipies: any  , categories:any}) {
                         numColumns={2}
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item, i }) => <RecipieCard item={item} index={i} />}
-                        // refreshing={isLoadingNext}
-                        // onRefresh={() => refetch({ first: ITEM_CNT })}
                         onEndReachedThreshold={0.1}
-                    // onEndReached={() => loadNext(ITEM_CNT)}
                     />)}
             </View>
         </View>
