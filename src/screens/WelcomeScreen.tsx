@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import {
     Image,
     StatusBar,
-    Text, View,
+    Text, Touchable, TouchableOpacity, View,
 } from 'react-native';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import Animated, { useSharedValue, withSpring } from 'react-native-reanimated';
@@ -16,7 +16,7 @@ function WelcomeScreen() {
         ring2padding.value = 0;
         setTimeout(() => ring1padding.value = withSpring(ring1padding.value + hp(5)), 150)
         setTimeout(() => ring2padding.value = withSpring(ring2padding.value + hp(5.5)), 350)
-        setTimeout(()=> navigation.navigate("Home") , 2500)
+        // setTimeout(()=> navigation.navigate("Home") , 2500)
     }, []
     )
     return (
@@ -34,6 +34,11 @@ function WelcomeScreen() {
                 <Text style={{ color: 'white', fontSize: hp(2.8), fontStyle: 'italic', fontWeight: "600" }}>
                     From kitchen to plate, flavors await
                 </Text>
+                <TouchableOpacity style={{ backgroundColor: 'white', padding: 10, marginTop: 20, borderRadius: 15 }} onPress={()=> navigation.navigate("GetStartedScreen")}>
+                    <Text style={{ marginStart: hp(9), marginEnd: hp(9)  , fontWeight:'600' , color:'black' , fontSize:hp(2.3)}}>
+                        Get Started
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
     );

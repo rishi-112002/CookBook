@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   ScrollView,
   Text,
-  View, Image, StatusBar, TextInput
+  View, Image, StatusBar, TextInput, BackHandler
 } from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { BellIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
@@ -21,8 +21,17 @@ function HomeScreen() {
     setRecipiesData([])
 
   }
+  const handleBackPress = () => {
+    BackHandler.exitApp();
+    return true;
+  };
   useEffect(() => {
     getCategories();
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    return () => {
+      backHandler.remove();
+    }
 
   }, [])
   const getCategories = async () => {
