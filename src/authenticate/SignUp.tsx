@@ -18,14 +18,14 @@ function SignUp() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             Alert.alert("Warning", "Entered Email is inValid")
-            return
+            return true;
         }
 
     };
     const ValidatePassword = (pass: string) => {
         if (pass.length <= 8) {
             Alert.alert("Warning", "password is minium of 8 digits")
-            return
+            return true;
         }
 
     }
@@ -46,12 +46,9 @@ function SignUp() {
             Alert.alert("Warning", "please enter your Password")
             return;
         }
-        if (!validateEmail(email)) {
-            return;
+        if (!validateEmail(email) || !ValidatePassword(password)) {
+            navigateToLogin();
         }
-        ValidatePassword(password)
-        validateEmail(email)
-        navigateToLogin();
 
     }
     return (

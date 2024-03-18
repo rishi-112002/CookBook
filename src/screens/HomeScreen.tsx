@@ -5,7 +5,7 @@ import {
   View, Image, StatusBar, TextInput, BackHandler
 } from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { BellIcon, MagnifyingGlassIcon } from "react-native-heroicons/outline";
+import { BellIcon, MagnifyingGlassIcon, SquaresPlusIcon } from "react-native-heroicons/outline";
 import Categories from '../components/Categories';
 import axios from 'axios';
 import Recipies from '../components/Recipies';

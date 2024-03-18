@@ -17,13 +17,13 @@ function Login() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             Alert.alert("Warning", "Entered Email is inValid")
-            return
+            return true ;
         }
     };
     const ValidatePassword = (pass: string) => {
         if (pass.length <= 8) {
             Alert.alert("Warning", "password is minium of 8 digits")
-            return
+            return true;
         }
 
     }
@@ -40,12 +40,14 @@ function Login() {
             Alert.alert("Warning", "please enter your Password")
             return;
         }
-        if (!validateEmail(email)) {
-            return;
+        // if (!validateEmail(email)) {
+        //     return;
+        // }
+        if( !ValidatePassword(password) || !validateEmail(email)){
+             navigateToHOme();
         }
-        validateEmail(email)
-        ValidatePassword(password)
-        navigateToHOme();
+     
+       
     }
     return (
         <ScrollView style={{ backgroundColor: 'rgba(245 ,158 ,11 ,0.9)', flex: 1 }}>
@@ -88,7 +90,7 @@ function Login() {
                         </TouchableOpacity>
 
                     </View>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={()=> navigaton.navigate("Forgot")}>
                         <Text style={{ alignItems: 'flex-end', marginStart: 'auto', color: 'blue', marginTop: 5, fontSize: 14, fontWeight: "700" }}>
                             Forgot password?
                         </Text>
