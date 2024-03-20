@@ -2,19 +2,34 @@ import React, { useEffect, useState } from 'react';
 import {
   ScrollView,
   Text,
-  View, Image, StatusBar, TextInput, BackHandler
+  View, Image, StatusBar, TextInput, BackHandler, Alert
 } from 'react-native';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { BellIcon, MagnifyingGlassIcon, SquaresPlusIcon } from "react-native-heroicons/outline";
 import Categories from '../components/Categories';
 import axios from 'axios';
 import Recipies from '../components/Recipies';
+import { PlusIcon } from 'react-native-heroicons/solid';
+import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function HomeScreen() {
   const [activeCategorie, setActiveCategory] = useState("Beef")
   const [categories, setCategories] = useState([])
   const [recipiesData, setRecipiesData] = useState([])
 
+  const getEmailAndPassword = async () => {
+    try {
+      const savedEmail = await AsyncStorage.getItem('email');
+      const savedPassword = await AsyncStorage.getItem('password');
+      if (savedEmail !== null && savedPassword !== null) {
+        console.log("email and Password", savedEmail, savedPassword);
+      }
+    } catch (error) {
+      console.error('Error retrieving data from AsyncStorage:', error);
+      Alert.alert('Error', 'Failed to retrieve data. Please try again.');
+    }
+  };
   const handleCategoryChange = (category: React.SetStateAction<string>) => {
     getRecipies(category)
     setActiveCategory(category)
@@ -25,8 +40,11 @@ function HomeScreen() {
     BackHandler.exitApp();
     return true;
   };
+  const navigation = useNavigation()
   useEffect(() => {
+
     getCategories();
+    getEmailAndPassword()
     const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
 
     return () => {
@@ -69,7 +87,10 @@ function HomeScreen() {
         contentContainerStyle={{ paddingBottom: 50 }}>
         <View style={{ margin: 15, alignItems: 'center', justifyContent: 'space-between', flexDirection: 'row' }}>
           <Image source={require("../../assests/images/avtar.png")} style={{ height: hp(5), width: hp(5), borderRadius: 15 }} />
-          <BellIcon size={hp(4)} color={"gray"} />
+          <View style={{ flexDirection: 'row', margin: 2 }}>
+            <PlusIcon size={hp(4)} color={"gray"} style={{ margin: 2 }} onPress={() => navigation.navigate("AddRecipieScreen")} />
+            <BellIcon size={hp(4)} color={"gray"} style={{ margin: 2 }} />
+          </View>
         </View>
         <View style={{ marginStart: 16, flexDirection: 'column' }}>
           <Text style={{ color: 'black', fontSize: hp(2) }}>
@@ -108,3 +129,5 @@ function HomeScreen() {
 
 
 export default HomeScreen;
+
+

@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Alert, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -17,7 +18,7 @@ function Login() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
             Alert.alert("Warning", "Entered Email is inValid")
-            return true ;
+            return true;
         }
     };
     const ValidatePassword = (pass: string) => {
@@ -31,7 +32,7 @@ function Login() {
         navigaton.navigate("Home")
     }
 
-    const logincheck = () => {
+    const logincheck = async () => {
         if (!email) {
             Alert.alert("Warning", "Please enter Your email")
             return;
@@ -43,11 +44,21 @@ function Login() {
         // if (!validateEmail(email)) {
         //     return;
         // }
-        if( !ValidatePassword(password) || !validateEmail(email)){
-             navigateToHOme();
+        if (!ValidatePassword(password) || !validateEmail(email)) {
+
         }
-     
-       
+        try {
+
+            await AsyncStorage.setItem('email', email);
+            await AsyncStorage.setItem('password', password);
+            navigateToHOme();
+
+        } catch (error) {
+            console.error('Error saving data to AsyncStorage:', error);
+            Alert.alert('Error', 'Failed to save data. Please try again.');
+        }
+
+
     }
     return (
         <ScrollView style={{ backgroundColor: 'rgba(245 ,158 ,11 ,0.9)', flex: 1 }}>
@@ -90,7 +101,7 @@ function Login() {
                         </TouchableOpacity>
 
                     </View>
-                    <TouchableOpacity onPress={()=> navigaton.navigate("Forgot")}>
+                    <TouchableOpacity onPress={() => navigaton.navigate("Forgot")}>
                         <Text style={{ alignItems: 'flex-end', marginStart: 'auto', color: 'blue', marginTop: 5, fontSize: 14, fontWeight: "700" }}>
                             Forgot password?
                         </Text>
